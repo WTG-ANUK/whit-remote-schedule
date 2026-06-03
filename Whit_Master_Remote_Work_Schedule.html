@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Whit Grebitus — Master Remote Work Schedule</title>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:        #9ecd51;
+      --green-dark:   #7fb33e;
+      --green-light:  #eef6db;
+      --text:         #333333;
+      --muted:        #6b7280;
+      --bg:           #f8f9fa;
+      --surface:      #ffffff;
+      --border:       #e7e7e7;
+      --dark:         #2d2d2d;
+
+      --personal:     #2CB5B5;
+      --personal-bg:  #e6f7f7;
+      --business:     #2B6CB0;
+      --business-bg:  #dbeafe;
+      --transition:   #D97706;
+      --transition-bg:#fef3c7;
+      --open:         #27AE60;
+      --open-bg:      #d1fae5;
+    }
+
+    body {
+      font-family: 'Source Sans 3', 'Source Sans Pro', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.5;
+    }
+
+    .page { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
+
+    /* ── Header ── */
+    .header {
+      background: var(--dark);
+      border-radius: 6px 6px 0 0;
+      padding: 18px 22px 14px;
+      margin-bottom: 0;
+    }
+    .header h1 {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+    .header .sub {
+      font-size: 12px;
+      color: #aaaaaa;
+      font-weight: 400;
+    }
+
+    /* ── Context bar ── */
+    .context-bar {
+      background: var(--green-light);
+      border-bottom: 3px solid var(--green);
+      padding: 8px 22px;
+      font-size: 13px;
+      color: var(--text);
+    }
+    .context-bar b { color: var(--dark); }
+
+    /* ── Section header ── */
+    .section-label {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--green-dark);
+      padding: 16px 0 6px;
+      border-bottom: 1.5px solid var(--green);
+      margin-bottom: 2px;
+    }
+
+    /* ── Day blocks ── */
+    .day-block {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      border-bottom: 1px solid var(--border);
+      min-height: 56px;
+    }
+    .day-label {
+      background: var(--green);
+      display: flex;
+      align-items: flex-start;
+      padding: 10px 10px 8px;
+    }
+    .day-label span {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: #fff;
+    }
+    .day-content {
+      background: #fafcf5;
+      padding: 8px 14px 8px;
+    }
+    .slots { display: flex; flex-direction: column; gap: 3px; }
+    .slot { display: flex; gap: 8px; align-items: baseline; }
+    .slot-time {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--dark);
+      white-space: nowrap;
+      min-width: 130px;
+    }
+    .slot-desc {
+      font-size: 12.5px;
+      color: #444;
+    }
+    .slot-afternoon {
+      font-size: 11.5px;
+      font-style: italic;
+      color: var(--muted);
+      margin-top: 4px;
+      padding-top: 3px;
+      border-top: 1px dotted var(--border);
+    }
+
+    /* ── Collaborators strip ── */
+    .collab-bar {
+      background: #f2f2f2;
+      border-top: 2px solid var(--green);
+      padding: 8px 14px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .collab-bar b { color: var(--text); }
+
+    /* ── Part divider ── */
+    .part-divider { height: 24px; }
+
+    /* ── Travel table ── */
+    .color-key {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      background: #f2f2f2;
+      padding: 7px 12px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .key-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+
+    table.travel {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+    }
+    table.travel thead tr {
+      background: var(--dark);
+      color: #fff;
+    }
+    table.travel th {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    table.travel td {
+      padding: 7px 10px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      color: var(--text);
+    }
+    table.travel tr.row-personal td { background: var(--personal-bg); }
+    table.travel tr.row-business  td { background: var(--business-bg); }
+    table.travel tr.row-transition td { background: var(--transition-bg); }
+    table.travel tr.row-open      td { background: var(--open-bg); }
+
+    .type-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+    .badge-personal   { color: var(--personal);   background: #b2eaea; }
+    .badge-business   { color: var(--business);   background: #bdd7f8; }
+    .badge-transition { color: var(--transition); background: #fde68a; }
+    .badge-open       { color: var(--open);       background: #a7f3d0; }
+
+    /* ── Notes box ── */
+    .notes-box {
+      background: #f2f2f2;
+      border-top: 2px solid var(--green);
+      padding: 10px 14px;
+      margin-top: 10px;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+    .notes-box b { color: var(--text); font-size: 13px; display: block; margin-bottom: 5px; }
+    .notes-box ul { list-style: none; padding: 0; }
+    .notes-box ul li { padding: 2px 0 2px 14px; position: relative; }
+    .notes-box ul li::before { content: "•"; position: absolute; left: 0; color: var(--green-dark); }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: 20px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: #aaa;
+      text-align: center;
+    }
+
+    @media print {
+      body { background: white; }
+      .page { padding: 0; max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>Whit Grebitus — Master Remote Work Schedule</h1>
+    <div class="sub">VP Sales &amp; Partner · Vantage Point Media LLC · Oxford, MS (CDT) · Team on PDT — you are 2 hours ahead</div>
+  </div>
+  <div class="context-bar">
+    <b>Core Hours Guidance:</b> Team works 8:00 AM – 5:00 PM PDT (10:00 AM – 7:00 PM CDT).
+    Your 2-hour morning head start is protected deep-work time — guard it.
+  </div>
+
+  <!-- Part 1 -->
+  <div class="section-label">Part 1 — Weekly Recurring Schedule &nbsp;|&nbsp; Oxford, MS · CDT</div>
+
+  <!-- Monday -->
+  <div class="day-block">
+    <div class="day-label"><span>Monday</span></div>
+    <div class="day-content">
+      <div class="slots">
+        <div class="slot"><span class="slot-time">8:00–9:30 AM</span><span class="slot-desc">VP Sales Pipeline &amp; Forecast — Pipedrive review, major clients</span></div>
+        <div class="slot"><span class="slot-time">9:30–10:00 AM</span><span class="slot-desc">1:1 with Robert <b>[Zoom]</b> &nbsp;<span style="color:var(--muted);font-size:11px">(7:30–8:00 AM PDT)</span></span></div>
+        <div class="slot"><span class="slot-time">10:15–10:45 AM</span><span class="slot-desc">Weekly Sales Direction with Reid <b>[Zoom]</b> &nbsp;<span style="color:var(--muted);font-size:11px">(8:15–8:45 AM PDT)</span></span></div>
+        <div class="slot"><span class="slot-time">12:00–4:00 PM</span><span class="slot-desc">Leadership Meeting — Robert, Jordan &amp; Carlos <b>[Zoom]</b> &nbsp;<span style="color:var(--muted);font-size:11px">(10:00 AM–2:00 PM PDT)</span></span></div>
+        <div class="slot"><span class="slot-time">4:00–4:30 PM</span><span class="slot-desc">Buffer</span></div>
+      </div>
+      <div class="slot-afternoon">Afternoon: Flexible high-value client work</div>
+    </div>
+  </div>
+
+  <!-- Tuesday -->
+  <div class="day-block">
+    <div class="day-label"><span>Tuesday</span></div>
+    <div class="day-content">
+      <div class="slots">
+        <div class="slot"><span class="slot-time">8:00–10:00 AM</span><span class="slot-desc">Core VP Selling Time — rekindling, advancing plans, qualification</span></div>
+        <div class="slot"><span class="slot-time">10:00–10:30 AM</span><span class="slot-desc">1:1 with Jordan <b>[Zoom]</b> — client &amp; editorial coordination</span></div>
+        <div class="slot"><span class="slot-time">11:00–11:30 AM</span><span class="slot-desc">1:1 with Reid <b>[Zoom]</b></span></div>
+        <div class="slot"><span class="slot-time">11:45 AM–12:15 PM</span><span class="slot-desc">1:1 with Carlos <b>[Zoom]</b></span></div>
+      </div>
+      <div class="slot-afternoon">Afternoon: Airtable coordination, proposals</div>
+    </div>
+  </div>
+
+  <!-- Wednesday -->
+  <div class="day-block">
+    <div class="day-label"><span>Wednesday</span></div>
+    <div class="day-content">
+      <div class="slots">
+        <div class="slot"><span class="slot-time">8:00–9:00 AM</span><span class="slot-desc">Strategic VP Review — quota, roadmap, adjustments</span></div>
+        <div class="slot"><span class="slot-time">9:00–9:30 AM</span><span class="slot-desc">AR/AP Sync with Cole <b>[Zoom]</b></span></div>
+        <div class="slot"><span class="slot-time">9:45–10:15 AM</span><span class="slot-desc">Mid-Week Alignment with Robert <b>[Zoom]</b> — hot deals, decisions</span></div>
+        <div class="slot"><span class="slot-time">10:15–10:45 AM</span><span class="slot-desc">Rotate 1:1s <b>[Zoom]</b> — Emily / Melissa</span></div>
+        <div class="slot"><span class="slot-time">1:00–1:30 PM</span><span class="slot-desc">Barbara/Whit Chat <b>[Zoom]</b> &nbsp;<span style="color:var(--muted);font-size:11px">(twice monthly)</span></span></div>
+      </div>
+      <div class="slot-afternoon">Afternoon: VP Sales Execution Block</div>
+    </div>
+  </div>
+
+  <!-- Thursday -->
+  <div class="day-block">
+    <div class="day-label"><span>Thursday</span></div>
+    <div class="day-content">
+      <div class="slots">
+        <div class="slot"><span class="slot-time">8:00–10:00 AM</span><span class="slot-desc">Protected VP Selling Focus — executive calls, negotiations</span></div>
+        <div class="slot"><span class="slot-time">10:00–10:30 AM</span><span class="slot-desc">Deals &amp; Proposals with Reid <b>[Zoom]</b> — active deals, follow-up strategy</span></div>
+        <div class="slot"><span class="slot-time">11:00–11:30 AM</span><span class="slot-desc">1:1 with Carlos <b>[Zoom]</b></span></div>
+      </div>
+      <div class="slot-afternoon">Afternoon: Flexible follow-ups &amp; bites review</div>
+    </div>
+  </div>
+
+  <!-- Friday -->
+  <div class="day-block">
+    <div class="day-label"><span>Friday</span></div>
+    <div class="day-content">
+      <div class="slots">
+        <div class="slot"><span class="slot-time">8:00–9:00 AM</span><span class="slot-desc">Weekly VP Metrics &amp; Forecast</span></div>
+        <div class="slot"><span class="slot-time">9:00–9:30 AM</span><span class="slot-desc">End-of-Week Brief with Jordan <b>[Zoom]</b> — wins, next-week client priorities</span></div>
+        <div class="slot"><span class="slot-time">10:00–10:30 AM</span><span class="slot-desc">Optional Sync with Robert <b>[Zoom]</b></span></div>
+      </div>
+      <div class="slot-afternoon">Afternoon: Delegate, wrap loose ends, strategic planning</div>
+    </div>
+  </div>
+
+  <!-- Collaborators -->
+  <div class="collab-bar">
+    <b>Key Collaborators &nbsp;·&nbsp;</b>
+    Robert (CEO): Early alignment + Leadership + optional Friday &nbsp;·&nbsp;
+    Jordan (EIC): Leadership Meeting + early availability &nbsp;·&nbsp;
+    Carlos (CTO): Leadership + twice-weekly 1:1s &nbsp;·&nbsp;
+    Reid: Pipeline review + 1:1 + rotates &nbsp;·&nbsp;
+    Emily &amp; Melissa: Open hours + rotate 1:1s
+  </div>
+
+  <!-- Part 2 -->
+  <div class="part-divider"></div>
+  <div class="header" style="border-radius:6px 6px 0 0;">
+    <h1 style="font-size:16px;">Part 2 — Travel &amp; Availability Overlay &nbsp;·&nbsp; May – September 2026</h1>
+    <div class="sub">Oxford weekly schedule in effect starting <b style="color:#9ecd51">Thursday, July 2.</b> Primary windows: Jul 2–13 · Jul 18–29 · August.</div>
+  </div>
+
+  <div style="background:#f2f2f2; padding:6px 14px 0;">
+    <div class="color-key">
+      <span><span class="key-dot" style="background:var(--personal)"></span><span style="color:var(--personal)">Personal / Family</span></span>
+      <span><span class="key-dot" style="background:var(--business)"></span><span style="color:var(--business)">Business Travel</span></span>
+      <span><span class="key-dot" style="background:var(--transition)"></span><span style="color:var(--transition)">Transition</span></span>
+      <span><span class="key-dot" style="background:var(--open)"></span><span style="color:var(--open)">Open / Flexible</span></span>
+    </div>
+  </div>
+
+  <table class="travel">
+    <thead>
+      <tr>
+        <th style="width:13%">Date</th>
+        <th style="width:22%">Activity</th>
+        <th style="width:14%">Location</th>
+        <th style="width:10%">Type</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="row-personal">
+        <td>May 29–31</td>
+        <td>Family time, Lake Tahoe</td>
+        <td>Lake Tahoe, CA</td>
+        <td><span class="type-badge badge-personal">Personal</span></td>
+        <td>Full personal block. No business scheduling. PT.</td>
+      </tr>
+      <tr class="row-business">
+        <td>Jun 6–8</td>
+        <td>IDDBA Show with team</td>
+        <td>Orlando, FL</td>
+        <td><span class="type-badge badge-business">Business</span></td>
+        <td>Dairy/Deli/Bakery show (official Jun 7–9). Setup day Jun 6. ET.</td>
+      </tr>
+      <tr class="row-personal">
+        <td>Jun 9</td>
+        <td>Last day in Sacramento — kids finish school, moving out</td>
+        <td>Sacramento, CA</td>
+        <td><span class="type-badge badge-personal">Personal</span></td>
+        <td>Kids finish school. Moving out of Sacramento residence. Family milestone.</td>
+      </tr>
+      <tr class="row-transition">
+        <td>Jun 10</td>
+        <td>Move to Lake Tahoe</td>
+        <td>Sacramento → Tahoe</td>
+        <td><span class="type-badge badge-transition">Transition</span></td>
+        <td>Moving day — driving to Lake Tahoe. Limited availability. PT.</td>
+      </tr>
+      <tr class="row-personal">
+        <td>Jun 11–12</td>
+        <td>Family time, Tahoe</td>
+        <td>Lake Tahoe, CA</td>
+        <td><span class="type-badge badge-personal">Personal</span></td>
+        <td>Personal. Fully protected. PT.</td>
+      </tr>
+      <tr class="row-open">
+        <td>Jun 15–19</td>
+        <td>Short work days — Tahoe</td>
+        <td>Lake Tahoe, CA</td>
+        <td><span class="type-badge badge-open">Open</span></td>
+        <td>On call as needed. Background email &amp; calls, proposal work. Short days. PT.</td>
+      </tr>
+      <tr class="row-transition">
+        <td>Jun 22–26</td>
+        <td>Drive Tahoe → Oxford, MS</td>
+        <td>En route / Oxford</td>
+        <td><span class="type-badge badge-transition">Transition</span></td>
+        <td>Multi-day drive. Limited availability Jun 22–26. Arriving Oxford, MS (CT).</td>
+      </tr>
+      <tr class="row-business">
+        <td>Jun 27 – Jul 1</td>
+        <td>Summer Fancy Food Show</td>
+        <td>New York City</td>
+        <td><span class="type-badge badge-business">Business</span></td>
+        <td>Fly from Memphis Jun 27. Javits Center (official Jun 28–30). ET.</td>
+      </tr>
+      <tr class="row-open">
+        <td><b>Jul 2–13</b> <span style="font-size:11px;color:var(--open)">(starts Thu)</span></td>
+        <td>Oxford remote schedule begins</td>
+        <td>Oxford, MS</td>
+        <td><span class="type-badge badge-open">Open</span></td>
+        <td>Weekly schedule in effect starting <b>Thu, Jul 2.</b> First full remote work window. CT.</td>
+      </tr>
+      <tr class="row-business">
+        <td>Jul 14–17</td>
+        <td>Organic Produce Summit (OPS)</td>
+        <td>Monterey, CA</td>
+        <td><span class="type-badge badge-business">Business</span></td>
+        <td>Fly from Memphis Jul 14. OPS (Jul 14–16). Return Jul 17. PT.</td>
+      </tr>
+      <tr class="row-open">
+        <td>Jul 18–29</td>
+        <td>Oxford remote work</td>
+        <td>Oxford, MS</td>
+        <td><span class="type-badge badge-open">Open</span></td>
+        <td>Second remote work window. Kids start school Jul 30. CT.</td>
+      </tr>
+      <tr class="row-personal">
+        <td>Jul 30 (Thu)</td>
+        <td>Kids start school</td>
+        <td>Oxford, MS</td>
+        <td><span class="type-badge badge-personal">Personal</span></td>
+        <td>Family milestone. May affect mornings as school year begins. CT.</td>
+      </tr>
+      <tr class="row-open">
+        <td>All of August</td>
+        <td>Mostly clear / open</td>
+        <td>Oxford, MS</td>
+        <td><span class="type-badge badge-open">Open</span></td>
+        <td>Clearest and longest Oxford window — best for deep work, planning, meetings. CT.</td>
+      </tr>
+      <tr class="row-personal">
+        <td>Week of Sept 1</td>
+        <td>New house completion</td>
+        <td>Oxford, MS</td>
+        <td><span class="type-badge badge-personal">Personal</span></td>
+        <td>Major milestone — moving &amp; settling in. Reduced availability. CT.</td>
+      </tr>
+      <tr class="row-business">
+        <td>Sept 9–12 (~10th)</td>
+        <td>Southern Innovations (SEPC)</td>
+        <td>Nashville, TN</td>
+        <td><span class="type-badge badge-business">Business</span></td>
+        <td>SEPC produce innovation event at Music City Center. Key industry networking. CT.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="notes-box">
+    <b>Quick Notes</b>
+    <ul>
+      <li>Oxford weekly schedule in effect starting <strong>Thursday, July 2.</strong> Primary windows: Jul 2–13, Jul 18–29, and most of August.</li>
+      <li>August is the clearest and longest stretch — best for deep work, bigger meetings, and planning sessions.</li>
+      <li>July 30 (kids start school) and week of Sept 1 (new house) are milestone weeks — expect lighter availability.</li>
+      <li>Southern Innovations (Nashville, Sept 9–12) is a tier-1 industry event alongside IDDBA, Fancy Food, and OPS.</li>
+      <li>All travel days and personal blocks are protected. Time zones vary (PT / ET / CT) — confirm before scheduling.</li>
+      <li>This is a living document — dates can shift. Confirm with Whit if anything changes.</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    Version 1.0 &nbsp;·&nbsp; Master document — VP Sales Remote Work Schedule (v5.0) + Travel &amp; Availability (May–Sept 2026) &nbsp;·&nbsp; Updated June 2026 &nbsp;·&nbsp; whit@andnowuknow.com
+  </div>
+
+</div>
+</body>
+</html>
