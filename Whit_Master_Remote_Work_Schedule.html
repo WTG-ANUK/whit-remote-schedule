@@ -18,15 +18,6 @@
       --surface:      #ffffff;
       --border:       #e7e7e7;
       --dark:         #2d2d2d;
-
-      --personal:     #2CB5B5;
-      --personal-bg:  #e6f7f7;
-      --business:     #2B6CB0;
-      --business-bg:  #dbeafe;
-      --transition:   #D97706;
-      --transition-bg:#fef3c7;
-      --open:         #27AE60;
-      --open-bg:      #d1fae5;
     }
 
     body {
@@ -145,19 +136,6 @@
     .part-divider { height: 24px; }
 
     /* ── Travel table ── */
-    .color-key {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      background: #f2f2f2;
-      padding: 7px 12px;
-      border-radius: 4px;
-      margin-bottom: 8px;
-      font-size: 12px;
-      font-weight: 600;
-    }
-    .key-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
-
     table.travel {
       width: 100%;
       border-collapse: collapse;
@@ -182,23 +160,8 @@
       vertical-align: top;
       color: var(--text);
     }
-    table.travel tr.row-personal td { background: var(--personal-bg); }
-    table.travel tr.row-business  td { background: var(--business-bg); }
-    table.travel tr.row-transition td { background: var(--transition-bg); }
-    table.travel tr.row-open      td { background: var(--open-bg); }
-
-    .type-badge {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 2px 6px;
-      border-radius: 3px;
-      white-space: nowrap;
-    }
-    .badge-personal   { color: var(--personal);   background: #b2eaea; }
-    .badge-business   { color: var(--business);   background: #bdd7f8; }
-    .badge-transition { color: var(--transition); background: #fde68a; }
-    .badge-open       { color: var(--open);       background: #a7f3d0; }
+    table.travel tbody tr:nth-child(odd) td  { background: #ffffff; }
+    table.travel tbody tr:nth-child(even) td { background: #f7f8f6; }
 
     /* ── Notes box ── */
     .notes-box {
@@ -299,7 +262,7 @@
         <div class="slot"><span class="slot-time">10:00–10:30 AM</span><span class="slot-desc">Deals &amp; Proposals with Reid <b>[Zoom]</b> — active deals, follow-up strategy</span></div>
         <div class="slot"><span class="slot-time">11:00–11:30 AM</span><span class="slot-desc">1:1 with Carlos <b>[Zoom]</b></span></div>
       </div>
-      <div class="slot-afternoon">Afternoon: Flexible follow-ups &amp; bites review</div>
+      <div class="slot-afternoon">Afternoon: Flexible follow-ups &amp; proposals</div>
     </div>
   </div>
 
@@ -329,133 +292,78 @@
   <!-- Part 2 -->
   <div class="part-divider"></div>
   <div class="header" style="border-radius:6px 6px 0 0;">
-    <h1 style="font-size:16px;">Part 2 — Travel &amp; Availability Overlay &nbsp;·&nbsp; May – September 2026</h1>
+    <h1 style="font-size:16px;">Part 2 — Travel &amp; Availability Overlay &nbsp;·&nbsp; June – September 2026</h1>
     <div class="sub">Oxford weekly schedule in effect starting <b style="color:#9ecd51">Thursday, July 2.</b> Primary windows: Jul 2–13 · Jul 18–29 · August.</div>
-  </div>
-
-  <div style="background:#f2f2f2; padding:6px 14px 0;">
-    <div class="color-key">
-      <span><span class="key-dot" style="background:var(--personal)"></span><span style="color:var(--personal)">Personal / Family</span></span>
-      <span><span class="key-dot" style="background:var(--business)"></span><span style="color:var(--business)">Business Travel</span></span>
-      <span><span class="key-dot" style="background:var(--transition)"></span><span style="color:var(--transition)">Transition</span></span>
-      <span><span class="key-dot" style="background:var(--open)"></span><span style="color:var(--open)">Open / Flexible</span></span>
-    </div>
   </div>
 
   <table class="travel">
     <thead>
       <tr>
         <th style="width:13%">Date</th>
-        <th style="width:22%">Activity</th>
-        <th style="width:14%">Location</th>
-        <th style="width:10%">Type</th>
+        <th style="width:24%">Activity</th>
+        <th style="width:15%">Location</th>
         <th>Notes</th>
       </tr>
     </thead>
     <tbody>
-      <tr class="row-personal">
-        <td>May 29–31</td>
-        <td>Family time, Lake Tahoe</td>
-        <td>Lake Tahoe, CA</td>
-        <td><span class="type-badge badge-personal">Personal</span></td>
-        <td>Full personal block. No business scheduling. PT.</td>
-      </tr>
-      <tr class="row-business">
-        <td>Jun 6–8</td>
-        <td>IDDBA Show with team</td>
-        <td>Orlando, FL</td>
-        <td><span class="type-badge badge-business">Business</span></td>
-        <td>Dairy/Deli/Bakery show (official Jun 7–9). Setup day Jun 6. ET.</td>
-      </tr>
-      <tr class="row-personal">
-        <td>Jun 9</td>
-        <td>Last day in Sacramento — kids finish school, moving out</td>
-        <td>Sacramento, CA</td>
-        <td><span class="type-badge badge-personal">Personal</span></td>
-        <td>Kids finish school. Moving out of Sacramento residence. Family milestone.</td>
-      </tr>
-      <tr class="row-transition">
-        <td>Jun 10</td>
-        <td>Move to Lake Tahoe</td>
-        <td>Sacramento → Tahoe</td>
-        <td><span class="type-badge badge-transition">Transition</span></td>
-        <td>Moving day — driving to Lake Tahoe. Limited availability. PT.</td>
-      </tr>
-      <tr class="row-personal">
-        <td>Jun 11–12</td>
-        <td>Family time, Tahoe</td>
-        <td>Lake Tahoe, CA</td>
-        <td><span class="type-badge badge-personal">Personal</span></td>
-        <td>Personal. Fully protected. PT.</td>
-      </tr>
-      <tr class="row-open">
+      <tr>
         <td>Jun 15–19</td>
-        <td>Short work days — Tahoe</td>
+        <td>Working from Tahoe — shortened week</td>
         <td>Lake Tahoe, CA</td>
-        <td><span class="type-badge badge-open">Open</span></td>
-        <td>On call as needed. Background email &amp; calls, proposal work. Short days. PT.</td>
+        <td><b>Mon 6/15:</b> Working 10 AM–4 PM PDT (Leadership mtg 12:30–4 PM PDT). <b>Tue 6/16:</b> 9 AM–Noon PDT. <b>Wed 6/17:</b> 9 AM–Noon PDT; Barbara chat 1 PM PDT, Sales review 4 PM PDT. <b>Thu–Fri 6/18–19:</b> Off. All times PT.</td>
       </tr>
-      <tr class="row-transition">
+      <tr>
         <td>Jun 22–26</td>
         <td>Drive Tahoe → Oxford, MS</td>
         <td>En route / Oxford</td>
-        <td><span class="type-badge badge-transition">Transition</span></td>
         <td>Multi-day drive. Limited availability Jun 22–26. Arriving Oxford, MS (CT).</td>
       </tr>
-      <tr class="row-business">
+      <tr>
         <td>Jun 27 – Jul 1</td>
         <td>Summer Fancy Food Show</td>
         <td>New York City</td>
-        <td><span class="type-badge badge-business">Business</span></td>
         <td>Fly from Memphis Jun 27. Javits Center (official Jun 28–30). ET.</td>
       </tr>
-      <tr class="row-open">
-        <td><b>Jul 2–13</b> <span style="font-size:11px;color:var(--open)">(starts Thu)</span></td>
+      <tr>
+        <td><b>Jul 2–13</b> <span style="font-size:11px;color:var(--muted)">(starts Thu)</span></td>
         <td>Oxford remote schedule begins</td>
         <td>Oxford, MS</td>
-        <td><span class="type-badge badge-open">Open</span></td>
         <td>Weekly schedule in effect starting <b>Thu, Jul 2.</b> First full remote work window. CT.</td>
       </tr>
-      <tr class="row-business">
+      <tr>
         <td>Jul 14–17</td>
         <td>Organic Produce Summit (OPS)</td>
         <td>Monterey, CA</td>
-        <td><span class="type-badge badge-business">Business</span></td>
         <td>Fly from Memphis Jul 14. OPS (Jul 14–16). Return Jul 17. PT.</td>
       </tr>
-      <tr class="row-open">
+      <tr>
         <td>Jul 18–29</td>
         <td>Oxford remote work</td>
         <td>Oxford, MS</td>
-        <td><span class="type-badge badge-open">Open</span></td>
         <td>Second remote work window. Kids start school Jul 30. CT.</td>
       </tr>
-      <tr class="row-personal">
+      <tr>
         <td>Jul 30 (Thu)</td>
         <td>Kids start school</td>
         <td>Oxford, MS</td>
-        <td><span class="type-badge badge-personal">Personal</span></td>
         <td>Family milestone. May affect mornings as school year begins. CT.</td>
       </tr>
-      <tr class="row-open">
+      <tr>
         <td>All of August</td>
         <td>Mostly clear / open</td>
         <td>Oxford, MS</td>
-        <td><span class="type-badge badge-open">Open</span></td>
         <td>Clearest and longest Oxford window — best for deep work, planning, meetings. CT.</td>
       </tr>
-      <tr class="row-personal">
+      <tr>
         <td>Week of Sept 1</td>
         <td>New house completion</td>
         <td>Oxford, MS</td>
-        <td><span class="type-badge badge-personal">Personal</span></td>
         <td>Major milestone — moving &amp; settling in. Reduced availability. CT.</td>
       </tr>
-      <tr class="row-business">
+      <tr>
         <td>Sept 9–12 (~10th)</td>
         <td>Southern Innovations (SEPC)</td>
         <td>Nashville, TN</td>
-        <td><span class="type-badge badge-business">Business</span></td>
         <td>SEPC produce innovation event at Music City Center. Key industry networking. CT.</td>
       </tr>
     </tbody>
@@ -468,13 +376,13 @@
       <li>August is the clearest and longest stretch — best for deep work, bigger meetings, and planning sessions.</li>
       <li>July 30 (kids start school) and week of Sept 1 (new house) are milestone weeks — expect lighter availability.</li>
       <li>Southern Innovations (Nashville, Sept 9–12) is a tier-1 industry event alongside IDDBA, Fancy Food, and OPS.</li>
-      <li>All travel days and personal blocks are protected. Time zones vary (PT / ET / CT) — confirm before scheduling.</li>
+      <li>All travel days are protected. Time zones vary (PT / ET / CT) — confirm before scheduling.</li>
       <li>This is a living document — dates can shift. Confirm with Whit if anything changes.</li>
     </ul>
   </div>
 
   <div class="footer">
-    Version 1.0 &nbsp;·&nbsp; Master document — VP Sales Remote Work Schedule (v5.0) + Travel &amp; Availability (May–Sept 2026) &nbsp;·&nbsp; Updated June 2026 &nbsp;·&nbsp; whit@andnowuknow.com
+    Vantage Point Media LLC &nbsp;·&nbsp; VP Sales Remote Work Schedule &nbsp;·&nbsp; Updated June 2026 &nbsp;·&nbsp; whit@andnowuknow.com
   </div>
 
 </div>
